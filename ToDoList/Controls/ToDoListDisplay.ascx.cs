@@ -10,46 +10,37 @@ namespace ToDoList.Controls
     public partial class ToDoListDisplay : System.Web.UI.UserControl
     {
         //use this variable to only display certain category(1-3) (0 to display all categories) (invalid integer inputs will display all categories) 
-        int exception = 0;          
-        protected void Page_Load(object sender, EventArgs e)
+        public int exception { get; set; } = 0;
+        public int limit { get; set; } = 0;
+
+        protected override void OnPreRender(EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                if (PopulateList(exception) != null)
-                {
-                    UseRepeater();
-                }
-            }
+            base.OnPreRender(e);
+            UseRepeater();
+
         }
 
         protected void TODOs_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             int index = int.Parse((string)e.CommandArgument);
             PopulateList(exception)[index].Done = true;
-            ToDoItemForm.counter--;
-            UseRepeater();
         }
 
         public void UseRepeater()
         {
-            try
-            {
-                TODOsRepeater.DataSource = PopulateList(exception);
-                TODOsRepeater.DataBind();
-            }
-            catch (NullReferenceException)
-            {
-            }
+            TODOsRepeater.DataSource = PopulateList(exception);
+            TODOsRepeater.DataBind();
+
         }
 
-        public List<ToDoItem> PopulateList(int except)
+        public List<ToDoItem> PopulateList(int exception)
         {
-            if (except > 0)
+            if (exception > 0)
             {
                 List<ToDoItem> exceptionList = new List<ToDoItem>();
                 foreach (var item in ToDoItemData.GetToDoItems())
                 {
-                    if (item.Priority == except)
+                    if (item.Priority == exception)
                     {
                         exceptionList.Add(item);
                     }

@@ -13,8 +13,11 @@
             <h1>TODOs</h1>
             <h1>These are my ToDos</h1>
             <div>
+                <dc:ToDoListDisplay exception="1" runat="server" />
+                <dc:ToDoListDisplay exception="2" runat="server" />
+                <dc:ToDoListDisplay exception="3" runat="server" />
                 <dc:ToDoListDisplay runat="server" />
-
+                <dc:ToDoListDisplay exception="2" limit="5" runat="server" />
             </div>
 
 
